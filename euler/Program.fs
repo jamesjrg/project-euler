@@ -22,11 +22,10 @@ let problem1 = sum [for x in [1..999] do if divisible_by_3_or_5 x then yield x]
 
 let problem1_v2 = 
     let rec accf prev acc =
-        let curr = prev + 1
-        match curr with
-        | _ when curr > 999 -> acc
-        | _ when curr % 3 = 0 || curr % 5 = 0 -> accf curr (acc + curr)
-        | _ -> accf curr acc
+        match prev + 1 with
+        | curr when curr > 999 -> acc
+        | curr when curr % 3 = 0 || curr % 5 = 0 -> accf curr (acc + curr)
+        | curr -> accf curr acc
     accf 1 0
 
 (*
@@ -40,11 +39,10 @@ By considering the terms in the Fibonacci sequence whose values do not exceed fo
 
 let problem2 = 
     let rec accf prev_prev prev acc =
-        let curr = prev_prev + prev
-        match curr with
-        | _ when curr > 4000000 -> acc
-        | _ when curr % 2 = 0 -> accf prev curr (acc + curr)
-        | _ -> accf prev curr acc
+        match prev_prev + prev with
+        | curr when curr > 4000000 -> acc
+        | curr when curr % 2 = 0 -> accf prev curr (acc + curr)
+        | curr -> accf prev curr acc
     accf 1 2 2
 
 (*
@@ -54,4 +52,42 @@ The prime factors of 13195 are 5, 7, 13 and 29.
 What is the largest prime factor of the number 600851475143 ?
 *)
 
+let problem3_number = 600851475143UL
 
+let rec try_find_first_true start (arr : bool []) = 
+    match start with
+    | start when start >= arr.Length -> None
+    | start -> if arr.[start] then Some(start) else try_find_first_true (start + 1) arr
+
+let print_array_filtered arr = 
+    Array.iteri(fun i x -> if x then printf "%i, " i) arr
+
+let problem3_number_sqrt = int (sqrt (double problem3_number))
+
+//simplistic version of sieve of Eratosthenes, other methods too complex
+//use imperative style to avoid creating lots of new lists
+//array is 0 indexed, but to keep things simple equate index to actual number, so position 0 represents number 0
+let primes : bool array = 
+    let primes = Array.create (problem3_number_sqrt + 1) true
+    let mutable i = 2
+    while i <= problem3_number_sqrt do
+        for j = 2 to problem3_number_sqrt / i do
+            primes.[i*j] <- false
+        let res = try_find_first_true (i + 1) primes
+        match res with
+        | Some x -> i <- x
+        | None -> i <- problem3_number_sqrt + 1
+    //print_array_filtered primes
+    primes
+
+let is_factor x = if problem3_number % x = 0UL then true else false
+(*
+// assuming problem3_number itself is not prime
+let problem3 =
+    let rec recf prev =
+        match prev - 1UL with
+        | curr when is_factor curr && is_prime curr -> curr
+        | curr -> recf curr
+    recf (uint64 (sqrt (double problem3_number)))
+    
+    *)
