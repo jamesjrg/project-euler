@@ -5,7 +5,7 @@ If we list all the natural numbers below 10 that are multiples of 3 or 5, we get
 Find the sum of all the multiples of 3 or 5 below 1000.
 *)
 
-//first version
+//first version, without using library sum function for some practice with recursion
 
 let sum list =
     let rec accf list acc =
@@ -20,13 +20,7 @@ let problem1 = sum [for x in [1..999] do if divisible_by_3_or_5 x then yield x]
 
 // second version
 
-let problem1_v2 = 
-    let rec accf prev acc =
-        match prev + 1 with
-        | curr when curr > 999 -> acc
-        | curr when curr % 3 = 0 || curr % 5 = 0 -> accf curr (acc + curr)
-        | curr -> accf curr acc
-    accf 1 0
+let problem1_v2 = List.sum[for x in [1..999] do if x % 3 = 0 || x % 5 = 0 then yield x]
 
 (*
 problem 2
