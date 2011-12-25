@@ -1,10 +1,4 @@
-﻿//util/debug 
-
-//from problem 3
-let print_array_filtered arr = 
-    Array.iteri(fun i x -> if x then printf "%i, " i) arr
-
-(*
+﻿(*
 problem 1
 
 If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
@@ -54,7 +48,6 @@ The prime factors of 13195 are 5, 7, 13 and 29.
 
 What is the largest prime factor of the number 600851475143 ?
 *)
-
 let problem3 =
     let problem3_number = 600851475143UL
     
@@ -92,43 +85,41 @@ let problem3 =
 
     recfunc (primes.Length - 1)
 
-(*
-problem 4
+(* problem 4
 
 A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 
 Find the largest palindrome made from the product of two 3-digit numbers.
 *)
-let problem4 =
-    let is_palindrome n =
-        match n with
-        | n when n > 99999 -> 
-            let ch_arr = (string n).ToCharArray()
-            if ch_arr.[0..2] = (Array.rev ch_arr).[0..2] then true else false
-        //not catering for case where it isn't a 6 digit number
-        | n -> false
+let is_palindrome n =
+    let ch_arr = (string n).ToCharArray()
+    if ch_arr = (Array.rev ch_arr) then true else false
 
-    let rec rfunc_outer x =  
-        let rec rfunc_inner x y =
-            let curr = x * y
-            match is_palindrome curr with
-            | true -> Some (curr, x, y)
-            | false ->
-                if y < x then
-                    None 
-                else
-                    let y = y - 1
-                    rfunc_inner x y
-        let res = rfunc_inner x 999
-        match res with
-        | Some details -> Some details
-        | None ->
-            if x < 100 then
-                None
-            else
-                let x = x - 1
-                rfunc_outer x
-    rfunc_outer 999
-       
-        
+let problem4_v1 =
+    //this version does the multiplication twice
+    List.max([for x in [100..999] do for y in [100..999] do if is_palindrome (x*y) then yield (x*y)])
+let problem4_v2 =
+    //this version needs two steps to create the list
+    List.max (List.filter (fun item -> is_palindrome item) [for x in [100..999] do for y in [100..999] -> x*y])
+
+(* problem 5
+
+2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+
+What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+*)
+
+//exclude numbers which are themselves factors of other numbers, also 1..19 because we only check every 20th number
+let dividers = [for x in [1..19] do if [for y in [(x + 1)..19] do if y % x = 0 then yield y].Length = 0 then yield x]
+
+let problem5 =
+    let rec rec_func x =
+        let rec inner_rec_func x (remaining : int list) =
+            match remaining with
+            | [] -> true
+            | h :: t ->
+                if x % h <> 0 then false else inner_rec_func x t
+        if inner_rec_func x dividers then x
+        else rec_func (x + 20)
+    rec_func 20
 
