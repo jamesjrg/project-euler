@@ -74,11 +74,9 @@ let problem3 =
             | None -> i <- problem3_number_sqrt + 1
         primes
 
-    let is_factor x = if problem3_number % x = 0UL then true else false
-
     let rec recfunc curr =
         //could have used reverse rather than revursive indexing from end, would perhaps mean memory but faster
-        if primes.[curr] && is_factor (uint64 curr)
+        if primes.[curr] && problem3_number % (uint64 curr) = 0UL
             then Some(curr)
         elif curr - 1 < 0 then None
         else recfunc (curr - 1)
@@ -98,6 +96,7 @@ let is_palindrome n =
 let problem4_v1 =
     //this version does the multiplication twice
     List.max([for x in [100..999] do for y in [100..999] do if is_palindrome (x*y) then yield (x*y)])
+
 let problem4_v2 =
     //this version needs two steps to create the list
     List.max (List.filter (fun item -> is_palindrome item) [for x in [100..999] do for y in [100..999] -> x*y])
@@ -114,12 +113,7 @@ let dividers = [for x in [1..19] do if [for y in [(x + 1)..19] do if y % x = 0 t
 
 let problem5 =
     let rec rec_func x =
-        let rec inner_rec_func x (remaining : int list) =
-            match remaining with
-            | [] -> true
-            | h :: t ->
-                if x % h <> 0 then false else inner_rec_func x t
-        if inner_rec_func x dividers then x
+        if List.forall (fun elem -> x % elem = 0) dividers then x
         else rec_func (x + 20)
     rec_func 20
 
