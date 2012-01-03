@@ -26,3 +26,5 @@ let problem1 =
     let divisible_by_3_or_5 x = if x % 3 = 0 || x % 5 = 0 then true else false
 
     sum [for x in [1..999] do if divisible_by_3_or_5 x then yield x]
+
+    printfn "%f %f %f" a b c

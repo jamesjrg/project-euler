@@ -150,12 +150,35 @@ problem 9
 A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
 a2 + b2 = c2
 
-For example, 32 + 42 = 9 + 16 = 25 = 52.
+For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.
 
 There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 Find the product abc. *)
 
-let problem9 = 0
+//this is a bit of a mess
+let problem9 =
+    let target = 1000.
+    let half_target = floor (target / 2.)
+
+    let rec recf a =
+        let rec inner_recf a b =
+            let rec inner_inner_recf a b c =
+                if (a + b + c = target) && (a ** 2. + b ** 2. = c ** 2.) then
+                    Some(a, b, c, a * b * c)
+                else if c = half_target then
+                    None
+                else
+                    inner_inner_recf a b (c + 1.)
+            match inner_inner_recf a b (b + 1.), b with
+                | Some x, _ -> Some(x)
+                | None, b when b = half_target - 1. -> None
+                | _, _ -> inner_recf a (b + 1.)
+        match inner_recf a (a + 1.), a with
+        | Some x, _ -> Some(x)
+        | None, a when a = half_target - 2. -> None
+        | _, _ -> recf (a + 1.)
+
+    recf 1.
 
 
 
