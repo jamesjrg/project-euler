@@ -77,7 +77,7 @@ What is the smallest positive number that is evenly divisible by all of the numb
 
 //exclude numbers which are themselves factors of other numbers, also 1..19 because we only check every 20th number
     let dividers = [for x in [1..19] do
-                        if [for y in [(x + 1)..19] do if y % x = 0 then yield y].Length = 0
+                        if not (List.exists (fun y -> y % x = 0) [(x + 1)..19])
                         then yield x]
 
     let problem5 =
