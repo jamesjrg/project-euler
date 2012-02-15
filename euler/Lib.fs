@@ -1,4 +1,5 @@
-﻿module Lib
+﻿//#load "C:\Users\james\dev\euler\euler\Lib.fs"
+module Lib
 
 (* simplistic version of sieve of Eratosthenes, other options include both variations on sieves and variations on trial and error
 use imperative style with a fixed size array to hopefully speed things up a bit
