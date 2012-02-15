@@ -1,4 +1,6 @@
-﻿open Lib
+﻿//#load "C:\Users\james\dev\euler\euler\Lib.fs"
+
+open Lib
 
 module Euler =
 (*
@@ -40,15 +42,7 @@ What is the largest prime factor of the number 600851475143 ?
         let sqrt_number = int (sqrt (double problem3_number))
 
         let primes = Lib.primes_upto sqrt_number
-
-        let rec recfunc curr =
-            //could have used reverse rather than revursive indexing from end, would perhaps mean more memory but also perhaps faster
-            if primes.[curr] && problem3_number % (uint64 curr) = 0UL
-                then Some(curr)
-            elif curr - 1 < 0 then None
-            else recfunc (curr - 1)
-
-        recfunc (primes.Length - 1)
+        Array.find (fun x -> problem3_number % (uint64 x) = 0UL) (Array.rev primes)
 
 (* problem 4
 
@@ -155,36 +149,44 @@ For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.
 There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 Find the product abc. *)
 
-//this is a bit of a mess
+//this would be much cleaner with iterative loops in other languages, but F# doesn't support break or goto, which means it would still be a mess regardless. Also made a bit of a mess by having to put a decimal point after a number whenever you want it to be treated as a double.
+
 let problem9 =
     let target = 1000.
-    let half_target = floor (target / 2.)
+    let a_max = floor (target / 4.)
+    let b_max = floor (target / 2.) - 1.
+    let c_max = floor (target / 2.)
 
     let rec recf a =
         let rec inner_recf a b =
             let rec inner_inner_recf a b c =
                 if (a + b + c = target) && (a ** 2. + b ** 2. = c ** 2.) then
                     Some(a, b, c, a * b * c)
-                else if c = half_target then
+                else if c = c_max then
                     None
                 else
                     inner_inner_recf a b (c + 1.)
             match inner_inner_recf a b (b + 1.), b with
                 | Some x, _ -> Some(x)
-                | None, b when b = half_target - 1. -> None
+                | None, b when b = b_max -> None
                 | _, _ -> inner_recf a (b + 1.)
         match inner_recf a (a + 1.), a with
         | Some x, _ -> Some(x)
-        | None, a when a = half_target - 2. -> None
+        | None, a when a = a_max -> None
         | _, _ -> recf (a + 1.)
 
     recf 1.
 
+(*
+problem 10
+The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
 
+Find the sum of all the primes below two million.
+*)
 
-
-
-
-
+let problem10 =
+    let primes = Lib.primes_upto 1999999
+    Array.sum primes
+    
 
 
