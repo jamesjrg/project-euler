@@ -51,7 +51,7 @@ Find the largest palindrome made from the product of two 3-digit numbers.
 *)
 let is_palindrome n =
     let ch_arr = (string n).ToCharArray()
-    if ch_arr = (Array.rev ch_arr) then true else false
+    ch_arr = (Array.rev ch_arr)
 
 let problem4_v1 =
     //this version does the multiplication twice
@@ -148,33 +148,22 @@ For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.
 There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 Find the product abc. *)
 
-//this would be much cleaner with iterative loops in other languages, but F# doesn't support break or goto, which means it would still be a mess regardless. Also made a bit of a mess by having to put a decimal point after a number whenever you want it to be treated as a double.
-
 let problem9 =
-    let target = 1000.
-    let a_max = floor (target / 4.)
-    let b_max = floor (target / 2.) - 1.
-    let c_max = floor (target / 2.)
+    let getTriple m n =
+        let a = 2 * m * n
+        let b = m * m - n * n
+        let c = m * m + n * n
+        a, b, c
 
-    let rec recf a =
-        let rec inner_recf a b =
-            let rec inner_inner_recf a b c =
-                if (a + b + c = target) && (a ** 2. + b ** 2. = c ** 2.) then
-                    Some(a, b, c, a * b * c)
-                else if c = c_max then
-                    None
-                else
-                    inner_inner_recf a b (c + 1.)
-            match inner_inner_recf a b (b + 1.), b with
-                | Some x, _ -> Some(x)
-                | None, b when b = b_max -> None
-                | _, _ -> inner_recf a (b + 1.)
-        match inner_recf a (a + 1.), a with
-        | Some x, _ -> Some(x)
-        | None, a when a = a_max -> None
-        | _, _ -> recf (a + 1.)
+    let triples = Seq.unfold (fun (m, n) ->
+                                let res = getTriple m n
+                                let next = if n + 1 < m then m, n + 1 else m + 1, 1
+                                Some(res, next))
+                             (2, 1)
 
-    recf 1.
+    triples
+        |> Seq.find(fun (a, b, c) -> a + b + c = 1000)
+        |> (fun (a, b, c) -> a * b * c)
 
 (*
 problem 10
