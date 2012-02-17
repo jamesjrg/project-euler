@@ -214,11 +214,77 @@ let problem13 =
 20849603980134001723930671666823555245252804609722
 53503534226472524250874054075591789781264330331690"
 
-    let sum =
+    let sum_str =
         //grr two character newlines cause hassles
         nums_str.Split([|'\r'; '\n'|], System.StringSplitOptions.RemoveEmptyEntries)
         |> Array.map (fun x -> bigint.Parse x)
         |> Array.sum
         |> string
-    sum.Substring(0, 10)
-                         
+    sum_str.Substring(0, 10)
+
+(*
+problem 14
+The following iterative sequence is defined for the set of positive integers:
+
+n → n/2 (n is even)
+n → 3n + 1 (n is odd)
+
+Using the rule above and starting with 13, we generate the following sequence:
+13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
+
+It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
+
+Which starting number, under one million, produces the longest chain?
+
+NOTE: Once the chain starts the terms are allowed to go above one million.
+*)
+
+let problem14 =
+    let rec get_chain_length count n =
+        if n = 1L then n, count
+        else
+            let next = if n % 2L = 0L then n / 2L else 3L * n + 1L
+            get_chain_length (count + 1) next
+
+    Seq.maxBy (fun n -> get_chain_length 1 n) {1L..1000000L}
+    
+(*
+problem 15
+Starting in the top left corner of a 2×2 grid, there are 6 routes (without backtracking) to the bottom right corner.
+<image>
+How many routes are there through a 20×20 grid?
+*)
+
+//with memoization this would work, as it is it takes forever
+let problem15 = 
+    let square_dim = 10
+    let rec route x y =
+        let mutable count = 0I
+        if x = square_dim && y = square_dim then count <- count + 1I
+        else
+            if x < square_dim then count <- (route (x + 1) y)
+            if y < square_dim then count <- (route x (y + 1))
+        count
+
+    route 0 0
+
+(* I definitely did not figure this out myself *)
+
+let problem15_mathsy = 
+    let rec factorial x =
+        if x < 1I then 1I
+        else x * factorial (x - 1I)
+    let square_dim = 20I
+    (factorial (square_dim * 2I)) / ((factorial square_dim) * (factorial square_dim))
+
+(*
+problem 16
+215 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+
+What is the sum of the digits of the number 21000?
+*)
+
+let problem16 =
+    (string ((bigint 2) <<< 999)).ToCharArray()
+    |> Array.map (fun x -> int (string x))
+    |> Array.sum
