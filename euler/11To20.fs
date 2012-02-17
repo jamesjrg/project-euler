@@ -255,21 +255,30 @@ Starting in the top left corner of a 2×2 grid, there are 6 routes (without back
 How many routes are there through a 20×20 grid?
 *)
 
-//with memoization this would work, as it is it takes forever
-let problem15 = 
-    let square_dim = 10
-    let rec route x y =
-        let mutable count = 0I
-        if x = square_dim && y = square_dim then count <- count + 1I
-        else
-            if x < square_dim then count <- (route (x + 1) y)
-            if y < square_dim then count <- (route x (y + 1))
-        count
+open System.Collections.Generic
 
+let problem15 = 
+    let memoize f =
+        let cache = Dictionary<_, _>()
+        fun x y ->
+            let ok, res = cache.TryGetValue((x,y))
+            if ok then res
+            else
+                let res = f x y
+                cache.[(x,y)] <- res
+                res
+
+    let square_dim = 20
+    let rec route = memoize (fun x y ->
+        if x = square_dim && y = square_dim then 1I
+        else
+            let mutable count = 0I
+            if x < square_dim then count <- count + (route (x + 1) y)
+            if y < square_dim then count <- count + (route x (y + 1))
+            count)
     route 0 0
 
 (* I definitely did not figure this out myself *)
-
 let problem15_mathsy = 
     let rec factorial x =
         if x < 1I then 1I
