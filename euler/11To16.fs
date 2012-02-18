@@ -1,4 +1,6 @@
-﻿module ElevenToTwenty
+﻿module _11to16
+
+open System.Collections.Generic
 
 open Lib
 
@@ -255,8 +257,6 @@ Starting in the top left corner of a 2×2 grid, there are 6 routes (without back
 How many routes are there through a 20×20 grid?
 *)
 
-open System.Collections.Generic
-
 let problem15 = 
     let memoize f =
         let cache = Dictionary<_, _>()
@@ -280,11 +280,8 @@ let problem15 =
 
 (* I definitely did not figure this out myself *)
 let problem15_mathsy = 
-    let rec factorial x =
-        if x < 1I then 1I
-        else x * factorial (x - 1I)
     let square_dim = 20I
-    (factorial (square_dim * 2I)) / ((factorial square_dim) * (factorial square_dim))
+    (Lib.factorial (square_dim * 2I)) / ((Lib.factorial square_dim) * (Lib.factorial square_dim))
 
 (*
 problem 16
@@ -297,3 +294,4 @@ let problem16 =
     (string ((bigint 2) <<< 999)).ToCharArray()
     |> Array.map (fun x -> int (string x))
     |> Array.sum
+

@@ -43,3 +43,5 @@ let primes_nth target_prime =
         | None -> i <- max + 1
     i
 
+let rec factorial n =
+    if n = 0I then 1I else n * factorial(n - 1I)

@@ -1,4 +1,4 @@
-﻿module OneToTen
+﻿module _1to10
 
 open Lib
 

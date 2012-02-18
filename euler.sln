@@ -5,12 +5,18 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "euler", "euler\euler.fsproj
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9105485-C0DB-46A0-94E3-B6F580D69177}.Debug|x64.ActiveCfg = Debug|x64
+		{C9105485-C0DB-46A0-94E3-B6F580D69177}.Debug|x64.Build.0 = Debug|x64
 		{C9105485-C0DB-46A0-94E3-B6F580D69177}.Debug|x86.ActiveCfg = Debug|x86
 		{C9105485-C0DB-46A0-94E3-B6F580D69177}.Debug|x86.Build.0 = Debug|x86
+		{C9105485-C0DB-46A0-94E3-B6F580D69177}.Release|x64.ActiveCfg = Release|x64
+		{C9105485-C0DB-46A0-94E3-B6F580D69177}.Release|x64.Build.0 = Release|x64
 		{C9105485-C0DB-46A0-94E3-B6F580D69177}.Release|x86.ActiveCfg = Release|x86
 		{C9105485-C0DB-46A0-94E3-B6F580D69177}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
