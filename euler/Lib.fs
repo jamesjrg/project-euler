@@ -45,3 +45,10 @@ let primes_nth target_prime =
 
 let rec factorial n =
     if n = 0I then 1I else n * factorial(n - 1I)
+
+let proper_divisors n =
+    Array.collect (fun elem ->
+        if n % elem <> 0 then Array.empty
+        else if elem = 1 || elem * elem = n then [| elem |]
+        else [| elem; n / elem |]) [| 1..int(sqrt (double n)) |]
+
