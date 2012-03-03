@@ -1,6 +1,5 @@
 ﻿module _27
 
-open System.Collections.Generic
 open Lib
 
 let max_arg = 999
@@ -10,17 +9,19 @@ let make_generator a b =
         n * n + a * n + b
     generator
 
-let primes = HashSet(Array.map (fun x -> int x) (Lib.primes_upto 8000))
+let primes = Lib.primes_upto_bool 20000
 
 let count_primes f =
-    let mutable n = 0
-    while primes.Contains(f n) do
-        n <- n + 1
-    n
+    let rec loop n =
+        let next = f n
+        if next > 0 && primes.[next] then loop (n + 1)
+        else n
+    loop 0
 
+//n=0 shows that b must be prime
 let generators = seq {
     for a in [-max_arg..max_arg] do
-        for b in [-max_arg..max_arg] do yield (make_generator a b, a * b)}
+        for b in [-max_arg..max_arg] do if b > 0 && primes.[b] then yield (make_generator a b, a * b)}
 
 let answer = Seq.map (fun x -> (count_primes (fst x), snd x)) generators |> Seq.max
 

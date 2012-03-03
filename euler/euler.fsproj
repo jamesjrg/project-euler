@@ -73,6 +73,8 @@
     <Compile Include="24.fs" />
     <Compile Include="25.fs" />
     <Compile Include="26.fs" />
+    <Compile Include="27.fs" />
+    <Compile Include="28.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

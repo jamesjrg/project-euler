@@ -12,7 +12,7 @@ let rec try_find_first_true start (arr : bool []) =
     | start when start >= arr.Length -> None
     | start -> if arr.[start] then Some(start) else try_find_first_true (start + 1) arr
 
-let primes_upto max: int64 array = 
+let primes_upto_bool max: bool array = 
     let primes_bool = Array.create (max + 1) true
     primes_bool.[0] <- false
     primes_bool.[1] <- false
@@ -25,7 +25,10 @@ let primes_upto max: int64 array =
         match res with
         | Some res -> i <- res
         | None -> i <- max + 1
-    let primes = Array.mapi (fun i x -> if x then (int64 i) else 0L) primes_bool
+    primes_bool
+
+let primes_upto max: int64 array = 
+    let primes = Array.mapi (fun i x -> if x then (int64 i) else 0L) (primes_upto_bool max)
     Array.filter(fun x -> x > 0L) primes
 
 let primes_nth target_prime = 
