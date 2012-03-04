@@ -1,7 +1,7 @@
 ﻿module _28v1
 
 let dim = 1001
-let break_number = dim * dim + 1
+let end_num = dim * dim + 1
 
 type Direction =
    | Up = 0
@@ -18,7 +18,7 @@ type SeqState = {
     }
 
 let unfold_func state = 
-    if state.n = break_number then None else
+    if state.n = end_num then None else
         let value = if abs state.x = abs state.y then state.n else 0
 
         let new_dir, new_target =

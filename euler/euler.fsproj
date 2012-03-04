@@ -74,6 +74,7 @@
     <Compile Include="25.fs" />
     <Compile Include="26.fs" />
     <Compile Include="27.fs" />
+    <Compile Include="28v1.fs" />
     <Compile Include="28.fs" />
   </ItemGroup>
   <ItemGroup>
