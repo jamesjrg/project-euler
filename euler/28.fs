@@ -17,7 +17,7 @@ let answer =
 //almost the same as above, but in imperative style. Actually seems much clearer this way...
 let answer_imperative = 
     let mutable curr = 1
-    let mutable total = 0
+    let mutable total = 1
     let mutable add = 2
 
     for a in {1..(dim - 1) / 2} do
@@ -25,4 +25,5 @@ let answer_imperative =
             curr <- curr + add
             total <- total + curr
         add <- add + 2
+    total
 
