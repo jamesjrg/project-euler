@@ -2,7 +2,7 @@
 
 let dim = 1001
 
-//much better than first version, using some extremely basic maths
+//2. much better than first version, using some extremely basic maths
 let answer =
     let max_num = dim * dim
     let rec loop acc inc inc_count n =
@@ -14,7 +14,7 @@ let answer =
             loop (acc + n) new_inc new_inc_count (n + inc)
     loop 0 2 1 1
 
-//almost the same as above, but in imperative style. Actually seems much clearer this way...
+//3. imperative style, and slightly different loop
 let answer_imperative = 
     let mutable curr = 1
     let mutable total = 1
@@ -26,4 +26,11 @@ let answer_imperative =
             total <- total + curr
         add <- add + 2
     total
+
+//4. copied off internet, much more compact (though obviously still less compact that people who have solved it analytically)
+let problem028 =
+    [1..500]
+    |> List.fold (fun (accum, last) n ->
+            (accum + 4*last + 20*n, last + 8*n)) (1,1)
+    |> fst
 
