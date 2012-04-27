@@ -1,6 +1,8 @@
 ﻿//#load "C:\Users\james\dev\euler\euler\Lib.fs"
 module Lib
 
+open System.Collections.Generic
+
 (* simplistic version of sieve of Eratosthenes, other options include both variations on sieves and variations on trial and error
 use imperative style with a fixed size array to hopefully speed things up a bit
 array is 0 indexed, but to keep things simple equate index to actual number, so position 0 represents number 0
@@ -47,7 +49,17 @@ let primes_nth target_prime =
     i
 
 let rec factorial n =
-    if n = 0I then 1I else n * factorial(n - 1I)
+    Seq.fold ( * ) 1I [1I .. n]
+
+let ncr_slow n r =
+    factorial n / (factorial r * factorial (n - r))
+
+//actual formula would be acc * ((n - (r-i)) / i)), but then you can't use integer arithmetic
+let ncr n r =
+    Seq.fold (fun acc i -> acc * (n - (r-i)) / i) 1I [1I .. r]
+
+let test =
+    Seq.fold (fun acc i -> acc * ((3I - (2I-i)) / i)) 1I [1I .. 2I]
 
 let proper_divisors n =
     Array.collect (fun elem ->
@@ -55,3 +67,32 @@ let proper_divisors n =
         else if elem = 1 || elem * elem = n then [| elem |]
         else [| elem; n / elem |]) [| 1..int(sqrt (double n)) |]
 
+let memoize f =
+    let cache = Dictionary<_, _>()
+    fun x ->
+        let ok, res = cache.TryGetValue(x)
+        if ok then res
+        else
+            let res = f x
+            cache.[x] <- res
+            res
+
+let memoize2 f =
+    let cache = Dictionary<_, _>()
+    fun x y ->
+        let ok, res = cache.TryGetValue((x,y))
+        if ok then res
+        else
+            let res = f x y
+            cache.[(x,y)] <- res
+            res
+
+let memoize3 f =
+    let cache = Dictionary<_, _>()
+    fun x y z ->
+        let ok, res = cache.TryGetValue((x, y, z))
+        if ok then res
+        else
+            let res = f x y z
+            cache.[(x,y,z)] <- res
+            res

@@ -1,17 +1,7 @@
 ﻿module _18v1
 
-open System.Collections.Generic
-
-let memoize f =
-    let cache = Dictionary<_, _>()
-    fun x y z ->
-        let ok, res = cache.TryGetValue((x, y, z))
-        if ok then res
-        else
-            let res = f x y z
-            cache.[(x,y,z)] <- res
-            res
-            
+open Lib
+          
 let triangle =
     "75
     95 64
@@ -33,7 +23,7 @@ let lines_with_spaces = triangle.Split([|'\r'; '\n'|], System.StringSplitOptions
 let lines_str = Array.map (fun (x :string) -> x.Trim().Split()) lines_with_spaces
 let lines = Array.map (fun line -> Array.map (fun value -> int value) line) lines_str
 
-let rec route = memoize (fun total row col ->
+let rec route = Lib.memoize3 (fun total row col ->
     let mutable ret = []
     let new_total = total + lines.[row].[col]
 

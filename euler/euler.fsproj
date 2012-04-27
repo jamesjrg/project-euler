@@ -76,6 +76,9 @@
     <Compile Include="27.fs" />
     <Compile Include="28v1.fs" />
     <Compile Include="28.fs" />
+    <Compile Include="29.fs" />
+    <Compile Include="30.fs" />
+    <Compile Include="31.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

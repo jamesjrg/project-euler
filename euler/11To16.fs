@@ -1,7 +1,5 @@
 ﻿module _11to16
 
-open System.Collections.Generic
-
 open Lib
 
 let problem11 =
@@ -258,18 +256,8 @@ How many routes are there through a 20×20 grid?
 *)
 
 let problem15 = 
-    let memoize f =
-        let cache = Dictionary<_, _>()
-        fun x y ->
-            let ok, res = cache.TryGetValue((x,y))
-            if ok then res
-            else
-                let res = f x y
-                cache.[(x,y)] <- res
-                res
-
     let square_dim = 20
-    let rec route = memoize (fun x y ->
+    let rec route = Lib.memoize2 (fun x y ->
         if x = square_dim && y = square_dim then 1I
         else
             let mutable count = 0I
