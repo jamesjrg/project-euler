@@ -6,6 +6,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{15A57200-807D-4F40-BCFC-EE4B9A36ADE1}"
 	ProjectSection(SolutionItems) = preProject
 		euler\data\22.txt = euler\data\22.txt
+		todo.txt = todo.txt
 	EndProjectSection
 EndProject
 Global
