@@ -241,7 +241,7 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 
 let problem14 =
     let rec get_chain_length count n =
-        if n = 1L then n, count
+        if n = 1L then count
         else
             let next = if n % 2L = 0L then n / 2L else 3L * n + 1L
             get_chain_length (count + 1) next
