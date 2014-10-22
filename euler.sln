@@ -1,13 +1,14 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "euler", "euler\euler.fsproj", "{C9105485-C0DB-46A0-94E3-B6F580D69177}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{15A57200-807D-4F40-BCFC-EE4B9A36ADE1}"
 	ProjectSection(SolutionItems) = preProject
 		euler\data\22.txt = euler\data\22.txt
 		todo.txt = todo.txt
 	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "euler", "euler\euler.fsproj", "{C9105485-C0DB-46A0-94E3-B6F580D69177}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
